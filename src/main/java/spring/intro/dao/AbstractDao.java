@@ -11,8 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class AbstractDao<T> {
 
-    @Autowired
     private SessionFactory sessionFactory;
+
+    @Autowired
+    public AbstractDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     public T add(T t) {
         Session session = null;
@@ -42,8 +46,6 @@ public abstract class AbstractDao<T> {
             Root<T> root = query.from(clazz);
             query.select(root);
             return session.createQuery(query).getResultList();
-        } catch (Exception e) {
-            throw new RuntimeException("Can't get list of all " + clazz.getSimpleName(), e);
         }
     }
 }
