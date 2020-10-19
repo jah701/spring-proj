@@ -1,7 +1,6 @@
 package spring.intro.dao.impl;
 
 import java.util.List;
-
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import spring.intro.dao.AbstractDao;
