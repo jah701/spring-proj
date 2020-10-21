@@ -1,6 +1,7 @@
 package spring.intro.dao;
 
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -36,6 +37,16 @@ public abstract class AbstractDao<T> {
             if (session != null) {
                 session.close();
             }
+        }
+    }
+    
+    public Optional<T> getById(Long id, Class<T> clazz) {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
+            Root<T> root = query.from(clazz);
+            query.select(root).where(criteriaBuilder.equal(root.get("id"), id));
+            return Optional.of(session.createQuery(query).getSingleResult());
         }
     }
 
