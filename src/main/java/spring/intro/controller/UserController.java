@@ -13,7 +13,7 @@ import spring.intro.service.UserService;
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
-    private UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -38,11 +38,11 @@ public class UserController {
     public List<UserResponseDto> getAll() {
         List<User> listOfAllUsers = userService.getAllUsers();
         return listOfAllUsers.stream()
-                .map(UserController::getUserDto)
+                .map(this::getUserDto)
                 .collect(Collectors.toList());
     }
 
-    private static UserResponseDto getUserDto(User user) {
+    private UserResponseDto getUserDto(User user) {
         UserResponseDto userDto = new UserResponseDto();
         userDto.setName(user.getName());
         userDto.setEmail(user.getEmail());
