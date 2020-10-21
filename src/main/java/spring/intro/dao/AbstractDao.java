@@ -8,13 +8,11 @@ import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class AbstractDao<T> {
 
     private SessionFactory sessionFactory;
 
-    @Autowired
     public AbstractDao(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
